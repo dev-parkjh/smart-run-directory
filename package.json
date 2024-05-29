@@ -1,0 +1,97 @@
+{
+  "name": "smart-run-directory",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "nodemon"
+  },
+  "bin": {
+    "srd": "dist/index.js"
+  },
+  "commands": {
+    "default": "srd",
+    "list": {
+      "command": "list",
+      "alias": "ls",
+      "description": "사용할 수 있는 프로젝트 목록을 출력합니다",
+      "arguments": [],
+      "usage": "srd ls",
+      "options": []
+    },
+    "add": {
+      "command": "add",
+      "description": "목록에 프로젝트를 추가합니다",
+      "arguments": [
+        {
+          "name": "[path]",
+          "description": "프로젝트 경로"
+        }
+      ],
+      "usage": "srd add [path]",
+      "options": []
+    },
+    "remove": {
+      "command": "remove",
+      "alias": "rm",
+      "description": "목록에서 프로젝트를 제거합니다",
+      "arguments": [
+        {
+          "name": "[project-name]",
+          "description": "프로젝트 명"
+        }
+      ],
+      "usage": "srd rm [project-name]",
+      "options": []
+    },
+    "scan": {
+      "command": "scan",
+      "description": "지정된 디렉터리 내의 프로젝트들을 목록에 추가합니다",
+      "arguments": [
+        {
+          "name": "[path]",
+          "description": "검색 경로"
+        }
+      ],
+      "usage": "srd scan [path]",
+      "options": []
+    },
+    "run": {
+      "command": "run",
+      "description": "프로젝트의 스크립트를 실행합니다",
+      "arguments": [
+        {
+          "name": "[project-name]",
+          "description": "프로젝트 명"
+        },
+        {
+          "name": "[script-name]",
+          "description": "실행할 스크립트 명"
+        }
+      ],
+      "usage": "srd run [project-name] [script-name]",
+      "options": []
+    }
+  },
+  "author": "dev-parkjh",
+  "license": "None",
+  "description": "Node.js 프로젝트를 보다 쉽게 실행하는 CLI 도구",
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "@types/node": "^20.12.12",
+    "eslint": "^8.56.0",
+    "globals": "^15.3.0",
+    "nodemon": "^3.1.1",
+    "typescript-eslint": "^7.11.0"
+  },
+  "dependencies": {
+    "@inquirer/checkbox": "^2.3.4",
+    "@inquirer/select": "^2.3.4",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^9.2.22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
