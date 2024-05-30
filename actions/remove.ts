@@ -29,7 +29,7 @@ const remove = async(projectName?: string) => {
     
     saveSetting(projects)
     
-    console.info('\n프로젝트 정보가 제거 되었습니다.')
+    console.info('\n다음 프로젝트 정보가 제거 되었습니다.')
     printProjects(removeInfoList)
   } catch (e) {
     console.info('\n' + (e as Error).message)
