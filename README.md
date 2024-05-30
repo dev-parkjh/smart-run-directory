@@ -14,7 +14,9 @@ srd [command]
 ## 도움말
 ```bash
 srd --help
+```
 
+```text
 Usage: srd [options] [command]
 
 Node.js 프로젝트를 보다 쉽게 실행하는 CLI 도구
@@ -28,6 +30,7 @@ Commands:
   add [path]                        목록에 프로젝트를 추가합니다
   remove|rm [project-name]          목록에서 프로젝트를 제거합니다
   scan [path]                       지정된 디렉터리 내의 프로젝트들을 목록에 추가합니다
+  open [project-name]               지정한 프로젝트를 에디터에서 표시합니다 (vscode, intellij 지원)
   run [project-name] [script-name]  프로젝트의 스크립트를 실행합니다
   help [command]                    명령어에 대한 도움말을 표시합니다
 ```

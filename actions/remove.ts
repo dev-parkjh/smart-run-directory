@@ -1,4 +1,4 @@
-import { IProjectInfo, printProjects, readSetting, saveSetting, selectProject } from './common'
+import { IProjectInfo, printProjects, readSetting, saveSetting, selectMultiProjects } from './common'
 
 const remove = async(projectName?: string) => {
   try {
@@ -7,7 +7,7 @@ const remove = async(projectName?: string) => {
     const targetIndexList = []
 
     if (projectName === undefined) {
-      targetIndexList.push(...(await selectProject('목록에서 제거할 프로젝트를 모두 선택해 주세요')))
+      targetIndexList.push(...(await selectMultiProjects('목록에서 제거할 프로젝트를 모두 선택해 주세요')))
     } else {
       const existInfo = projects.findIndex(({ name }: IProjectInfo) => name === projectName)
 

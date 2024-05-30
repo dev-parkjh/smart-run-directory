@@ -1,25 +1,6 @@
-import { IProjectInfo, readPackageJson, readSetting } from './common'
+import { getProjectPath, readPackageJson } from './common'
 import select from '@inquirer/select'
 import { spawn } from 'node:child_process'
-
-const getProjectPath = async(projectName?: string) => {
-  const { projects } = readSetting()
-
-  if (projectName !== undefined) {
-    return projects.find(({ name }: IProjectInfo) => name === projectName).path
-  }
-
-  const projectIndex = await select<number>({
-    message: '프로젝트를 선택해 주세요.',
-    choices: projects.map(({ name }: IProjectInfo, index: number) => ({
-      name,
-      value: index,
-    })),
-    loop: false
-  })
-
-  return projects[projectIndex].path
-}
 
 const getScriptKey = async() => {
   const { scripts } = readPackageJson(process.cwd())

@@ -1,6 +1,6 @@
 {
   "name": "smart-run-directory",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -55,6 +55,18 @@
         }
       ],
       "usage": "srd scan [path]",
+      "options": []
+    },
+    "open": {
+      "command": "open",
+      "description": "지정한 프로젝트를 에디터에서 표시합니다 (vscode, intellij 지원)",
+      "arguments": [
+        {
+          "name": "[project-name]",
+          "description": "프로젝트 명"
+        }
+      ],
+      "usage": "srd open [project-name]",
       "options": []
     },
     "run": {

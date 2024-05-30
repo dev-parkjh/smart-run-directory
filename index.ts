@@ -2,7 +2,7 @@
 
 import { Command } from 'commander'
 import { description, version, commands } from './package.json'
-import { add, list, remove, run, scan } from './actions'
+import { add, list, remove, run, scan, open } from './actions'
 
 const program = new Command()
 
@@ -42,6 +42,13 @@ program
   .description(commands.scan.description)
   .argument(commands.scan.arguments[0].name, commands.scan.arguments[0].description)
   .action(scan)
+
+// command: open
+program
+  .command(commands.open.command)
+  .description(commands.open.description)
+  .argument(commands.open.arguments[0].name, commands.open.arguments[0].description)
+  .action(open)
 
 // command: run
 program

@@ -91,12 +91,37 @@ export const findPath = async() => {
   return resolve(searchPath)
 }
 
-export const selectProject = async(title: string) => {
+export const selectMultiProjects = async(title: string) => {
   const { projects } = readSetting()
 
   return checkbox({
     message: title,
     choices: projects.map(({ name }: IProjectInfo, index: number) => ({ name, value: index })),
+    loop: false
+  })
+}
+
+export const getProjectPath = async(projectName?: string) => {
+  const { projects } = readSetting()
+
+  if (projectName !== undefined) {
+    return projects.find(({ name }: IProjectInfo) => name === projectName).path
+  }
+
+  const projectIndex = await selectProject()
+
+  return projects[projectIndex].path
+}
+
+export const selectProject = async() => {
+  const { projects } = readSetting()
+
+  return select<number>({
+    message: '프로젝트를 선택해 주세요.',
+    choices: projects.map(({ name }: IProjectInfo, index: number) => ({
+      name,
+      value: index,
+    })),
     loop: false
   })
 }
