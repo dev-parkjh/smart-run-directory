@@ -28,7 +28,7 @@ const saveProject = (projectInfo: IProjectInfo) => {
 
 const add = async(path?: string) => {
   try {
-    if (path === undefined) path = await findPath()
+    if (path === undefined) path = await findPath('추가할 프로젝트 경로를 선택해 주세요')
     const projectPath = resolve(process.cwd(), path)
     const packageJson = readPackageJson(projectPath)
 

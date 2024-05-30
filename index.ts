@@ -72,4 +72,10 @@ program
   .argument(commands.run.arguments[1].name, commands.run.arguments[1].description)
   .action(actions.run)
 
+// command: update
+program
+  .command(commands.update.command)
+  .description(commands.update.description)
+  .action(actions.update)
+
 program.parse()

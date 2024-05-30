@@ -6,5 +6,6 @@ import scan from './scan'
 import open from './open'
 import exportProject from './export'
 import importProject from './import'
+import update from './update'
 
-export { add, list, remove, run, scan, open, exportProject, importProject }
+export { add, list, remove, run, scan, open, exportProject, importProject, update }

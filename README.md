@@ -34,6 +34,7 @@ Commands:
   export [path]                     저장된 프로젝트 목록을 파일로 내보냅니다
   import [file-path]                프로젝트 목록을 파일에서 불러옵니다 (기존 목록은 삭제됨)
   run [project-name] [script-name]  프로젝트의 스크립트를 실행합니다
+  update                            CLI 도구를 업데이트 합니다
   help [command]                    명령어에 대한 도움말을 표시합니다
 ```
 - path는 상대 경로 또는 절대 경로 모두 가능합니다.

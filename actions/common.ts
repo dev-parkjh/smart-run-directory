@@ -57,7 +57,7 @@ export const printProjects = (projects: IProjectInfo[]) => {
   console.log(`+${'-'.repeat(nameLength + 2)}+${'-'.repeat(pathLength + 2)}+`)
 }
 
-export const findPath = async() => {
+export const findPath = async(message: string) => {
   enum PathType { Current }
 
   let searching = true
@@ -66,9 +66,9 @@ export const findPath = async() => {
   while (searching) {
     const directory = fs.readdirSync(searchPath, { withFileTypes: true }).filter(dir => dir.isDirectory())
     const target = await select<string | PathType>({
-      message: `추가할 프로젝트 경로를 선택해 주세요 (${searchPath})`,
+      message: `${message} (${searchPath})`,
       choices: [
-        { name: '📁 . (현재 경로 추가)', value: PathType.Current },
+        { name: '📁 . (현재 경로 선택)', value: PathType.Current },
         { name: '📁 ..', value: '..' },
         ...(directory.length === 0
           ? [new SelectSeparator(' (Empty)')]
