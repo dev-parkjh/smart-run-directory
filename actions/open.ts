@@ -1,6 +1,5 @@
-import { execSync, spawn } from 'node:child_process'
-import * as os from 'node:os'
-import { getProjectPath } from './common'
+import { spawn } from 'node:child_process'
+import { getProjectPath, isCommandAvailable } from './common.js'
 import select from '@inquirer/select'
 
 interface IEditorInfo {
@@ -8,8 +7,7 @@ interface IEditorInfo {
   command: string;
 }
 
-const getEditorList = () => {
-  const platform = os.platform()
+const getEditorList = async() => {
   const checkCommandList: IEditorInfo[] = [
     { name: 'vscode', command: 'code' },
     { name: 'intellij', command: 'idea' },
@@ -17,26 +15,10 @@ const getEditorList = () => {
 
   const editorList: IEditorInfo[] = []
 
-  if (platform === 'win32') {
-    // Windows -> Get-Command (PowerShell)
-    checkCommandList.forEach((editorInfo) => {
-      try {
-        execSync(`powershell -Command "Get-Command ${editorInfo.command} -ErrorAction Stop"`)
-        editorList.push(editorInfo)
-      } catch {
-        // undefined command -> pass
-      }
-    })
-  } else {
-    // Linux, Mac -> which
-    checkCommandList.forEach((editorInfo) => {
-      try {
-        execSync(`which ${editorInfo.command}`)
-        editorList.push(editorInfo)
-      } catch {
-        // undefined command -> pass
-      }
-    })
+  for (const editorInfo of checkCommandList) {
+    if (await isCommandAvailable(editorInfo.command)) {
+      editorList.push(editorInfo)
+    }
   }
 
   return editorList
@@ -44,7 +26,7 @@ const getEditorList = () => {
 
 const open = async(projectName?: string) => {
   try {
-    const editorList = getEditorList()
+    const editorList = await getEditorList()
 
     if (editorList.length === 0) {
       console.info('\n사용 가능한 에디터가 없습니다.\n\n다음과 같은 에디터를 지원합니다.\n- vscode   (https://code.visualstudio.com/)\n- intellij (https://www.jetbrains.com/ko-kr/idea)\n\n설치된 에디터 및 환경변수를 확인하고, 필요시 해당 에디터를 사용해 주세요.')

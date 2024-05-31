@@ -3,6 +3,9 @@ import fs from 'fs'
 import select, { Separator as SelectSeparator } from '@inquirer/select'
 import checkbox from '@inquirer/checkbox'
 import process from 'process'
+import { exec, spawn } from 'node:child_process'
+import * as os from 'node:os'
+import readline from 'readline'
 
 export interface IProjectInfo {
   name: string;
@@ -57,6 +60,16 @@ export const printProjects = (projects: IProjectInfo[]) => {
   console.log(`+${'-'.repeat(nameLength + 2)}+${'-'.repeat(pathLength + 2)}+`)
 }
 
+export const lineTool = {
+  clearThisLine: () => {
+    readline.clearLine(process.stdout, 0)
+    readline.cursorTo(process.stdout, 0)
+  },
+  insertBlankLine: () => {
+    console.log('')
+  }
+}
+
 export const findPath = async(message: string) => {
   enum PathType { Current }
 
@@ -83,6 +96,7 @@ export const findPath = async(message: string) => {
 
     if (typeof target === 'string') {
       searchPath = resolve(searchPath, target)
+      lineTool.clearThisLine()
     } else if (target === PathType.Current) {
       searching = false
     }
@@ -124,4 +138,54 @@ export const selectProject = async() => {
     })),
     loop: false
   })
+}
+
+export const execPromise = (command: string) => {
+  return new Promise<string>((resolve, reject) => {
+    exec(command, (error, stdout) => {
+      if (error) {
+        reject(error)
+
+        return
+      }
+
+      resolve(stdout)
+    })
+  })
+}
+
+export const executeCommandAsync = (command: string, ...args: string[] ) => {
+  return new Promise<void>((resolve, reject) => {
+    const childProcess = spawn(command, args, { stdio: 'inherit', shell: true })
+    
+    childProcess.on('error', (err) => {
+      reject(err)
+    })
+
+    childProcess.on('exit', (code, signal) => {
+      if (code === 0) {
+        resolve()
+      } else {
+        reject(`exitCode: ${code}, signal: ${signal}`)
+      }
+    })
+  })
+}
+
+export const isCommandAvailable = async(command: string) => {
+  const platform = os.platform()
+
+  try {
+    if (platform === 'win32') {
+      // Windows -> PowerShell Get-Command
+      await execPromise(`powershell -Command "Get-Command ${command} -ErrorAction Stop"`)
+    } else {
+      // Linux, Mac -> which
+      await execPromise(`which ${command}`)
+    }
+
+    return true
+  } catch {
+    return false
+  }
 }

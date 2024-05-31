@@ -1,27 +1,14 @@
-import { findPath, readSetting } from './common'
-import { execSync, exec } from 'node:child_process'
+import { execPromise, findPath, lineTool, readSetting } from './common';
+import { execSync } from 'node:child_process'
 import { name, version as current } from '../package.json'
 import confirm from '@inquirer/confirm'
 import { resolve } from 'path'
 import fs from 'fs'
 import importProjects from './import'
 
-const execPromise = (command: string) => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout) => {
-      if (error) {
-        reject(error)
-
-        return
-      }
-
-      resolve(stdout)
-    })
-  })
-}
-
 const updateInstall = async() => {
-  const spinner = (await import('ora')).default('업데이트를 설치합니다...').start()
+  const ora = (await import('ora')).default
+  const spinner = ora('업데이트를 설치합니다...').start()
 
   await execPromise(`npm i -g ${name}`)
   spinner.succeed('설치가 완료되었습니다.')
@@ -58,7 +45,7 @@ const update = async() => {
     
     console.info('\n백업된 프로젝트 정보를 불러옵니다.')
     await importProjects(backupFile)
-    console.log('\n')
+    lineTool.insertBlankLine()
 
     if (await confirm({ message: '백업 데이터를 삭제할까요?' })) {
       fs.unlinkSync(backupFile)
