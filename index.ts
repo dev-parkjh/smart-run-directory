@@ -66,7 +66,7 @@ program
 
 // command: run
 program
-  .command(commands.run.command)
+  .command(commands.run.command, { isDefault: true })
   .description(commands.run.description)
   .argument(commands.run.arguments[0].name, commands.run.arguments[0].description)
   .argument(commands.run.arguments[1].name, commands.run.arguments[1].description)

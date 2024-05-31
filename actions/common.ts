@@ -62,8 +62,8 @@ export const printProjects = (projects: IProjectInfo[]) => {
 
 export const lineTool = {
   clearThisLine: () => {
+    readline.moveCursor(process.stdout, 0, -1)
     readline.clearLine(process.stdout, 0)
-    readline.cursorTo(process.stdout, 0)
   },
   insertBlankLine: () => {
     console.log('')

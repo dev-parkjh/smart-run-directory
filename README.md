@@ -41,12 +41,6 @@ Commands:
 - project-name은 list에 등록된 프로젝트 이름입니다.
 - script-name은 package.json 파일에 등록된 스크립트 이름입니다.
 
-## 예정
-- README.md
-  - 명령어 사용법 예시 추가
-- Commands
-  - auto [project-name|script-name] : 현재 디렉터리 기준으로 입력된 파라미터에 더 적합한 명령을 실행합니다.
-
 ## 라이선스
 흠... 그런건가  
 그렇게 된거군  
